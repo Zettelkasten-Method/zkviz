@@ -63,8 +63,7 @@ def add_node(graph, node_id, title, shape='plaintext'):
     graph.node(node_id, label, shape=shape)
 
 
-def create_graph(notes_dir, output, node_style='record', pattern='*.md',
-                 layout='sfdp'):
+def create_graph(filepaths, output, node_style='record', layout='sfdp'):
     """
 
     Parameters
@@ -79,15 +78,32 @@ def create_graph(notes_dir, output, node_style='record', pattern='*.md',
     layout : str
         Layout engine used by Graphviz.
     """
-    filepaths = glob.glob(os.path.join(notes_dir, pattern))
     documents = parse_zettels(filepaths)
 
     dot = Digraph(comment='Zettelkasten', engine=layout)
+
     for doc in documents:
         add_node(dot, doc['id'], doc['title'], shape=node_style)
         for link in doc['links']:
             dot.edge(doc['id'], link)
     dot.render(output+'.gv', view=True)
+
+
+def list_zettels(notes_dir, pattern='*.md'):
+    """
+    List zettels in a directory.
+
+    Parameters
+    ----------
+    notes_dir : str
+        Path to the directory containing the zettels.
+    pattern : str (optional)
+        Pattern matching zettels. The default is '*.md'.
+
+    """
+
+    filepaths = glob.glob(os.path.join(notes_dir, pattern))
+    return filepaths
 
 
 if __name__ == "__main__":
@@ -108,7 +124,13 @@ if __name__ == "__main__":
                                  'osage', 'patchwork', 'sfdp', 'twopi'],
                         help='layout engine used by graphviz. [sfdp]'
                         )
+    parser.add_argument('zettel_paths', nargs='*', help='zettel file paths.')
     args = parser.parse_args()
 
-    create_graph(args.notes_dir, args.output, node_style=args.style,
-                 pattern=args.pattern, layout=args.layout)
+    if args.zettel_paths:
+        zettel_paths = args.zettel_paths
+    else:
+        zettel_paths = list_zettels(args.notes_dir, pattern=args.pattern)
+
+    create_graph(zettel_paths, args.output, node_style=args.style,
+                 layout=args.layout)
