@@ -195,7 +195,7 @@ def main(args=None):
 
     # Fail in case we didn't find a zettel
     if not zettels:
-        sys.exit("Couldn't find any files.")
+        sys.exit("I'm sorry, I couldn't find any files.")
 
     graph = create_graph(zettels)
     fig = create_plotly_plot(graph)
