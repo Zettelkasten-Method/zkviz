@@ -16,7 +16,10 @@ setuptools.setup(
     url="https://github.com/Zettelkasten-Method/zkviz",
     packages=setuptools.find_packages(),
     install_requires=[
-        'graphviz',
+        'plotly',
+        'numpy',
+        'scipy',
+        'networkx',
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
