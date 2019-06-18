@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>564694355.70418799</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>MacroActionType</key>
+						<string>Comment</string>
+						<key>StyledText</key>
+						<data>
+						cnRmZAAAAAADAAAAAgAAAAcAAABU
+						WFQucnRmAQAAAC6sAwAAKwAAAAEA
+						AACkAwAAe1xydGYxXGFuc2lcYW5z
+						aWNwZzEyNTJcY29jb2FydGYxNjcx
+						XGNvY29hc3VicnRmNTAwCntcZm9u
+						dHRibFxmMFxmbmlsXGZjaGFyc2V0
+						MCBIZWx2ZXRpY2FOZXVlO30Ke1xj
+						b2xvcnRibDtccmVkMjU1XGdyZWVu
+						MjU1XGJsdWUyNTU7XHJlZDBcZ3Jl
+						ZW4wXGJsdWUwO30Ke1wqXGV4cGFu
+						ZGVkY29sb3J0Ymw7O1xjc3NyZ2Jc
+						YzBcYzBcYzBcY25hbWUgdGV4dENv
+						bG9yO30KXHBhcmRcdHg1NjBcdHgx
+						MTIwXHR4MTY4MFx0eDIyNDBcdHgy
+						ODAwXHR4MzM2MFx0eDM5MjBcdHg0
+						NDgwXHR4NTA0MFx0eDU2MDBcdHg2
+						MTYwXHR4NjcyMFxwYXJkaXJuYXR1
+						cmFsXHBhcnRpZ2h0ZW5mYWN0b3Iw
+						CgpcZjBcZnMyNiBcY2YyIFRoaXMg
+						bWFjcm8gdXNlcyB6a3ZpeiBbMV0g
+						dG8gY3JlYXRlIGEgbmV0d29yayB2
+						aXN1YWxpemF0aW9uIG9mIHRoZSB0
+						aGUgbm90ZXMgY3VycmVudGx5IHNl
+						bGVjdGUgaW4gVGhlIEFyY2hpdmUg
+						YXBwIFsyXS5cClwKRm9yIHRoaXMg
+						bWFjcm8gdG8gd29yayBwcm9wZXJs
+						eSwgcGxlYXNlIHNldCB0aGUgbmV4
+						dCB0d28gdmFyaWFibGVzOlwKXAot
+						IFpLVklaX0FSQ0hJVkVfUEFUSCBp
+						cyB0aGUgcGF0aCB0byB3aGVyZSB5
+						b3VyIGFyY2hpdmUgbm90ZXMgYXJl
+						IHN0b3JlLiBGb3IgZXhhbXBsZSwg
+						fi9Ecm9wYm94L05vdGVzXAotIFpL
+						VklaX1BBVEggaXMgdGhlIGFic29s
+						dXRlIHBhdGggdG8gdGhlIHprdml6
+						IGV4ZWN1dGFibGUuIFBsZWFzZSBz
+						ZWUgWzFdIGZvciBpbnN0cnVjdGlv
+						bnMgb2YgaG93IHRvIGluc3RhbGwg
+						aXQuIFRoZSBwYXRoIGJlbG93IHVz
+						ZXMgdGhlIG9uZSB5b3UnZCBoYXZl
+						IGlmIHlvdSBmb2xsb3dlZCB0aGUg
+						aW5zdHJ1Y3Rpb25zIGRpcmVjdGx5
+						LlwKXApbMV06IGh0dHBzOi8vZ2l0
+						aHViLmNvbS9aZXR0ZWxrYXN0ZW4t
+						TWV0aG9kL3prdml6XApbMl06IGh0
+						dHBzOi8vemV0dGVsa2FzdGVuLmRl
+						L3RoZS1hcmNoaXZlL30BAAAAIwAA
+						AAEAAAAHAAAAVFhULnJ0ZhAAAADe
+						TQhdtgEAAAAAAAAAAAAA
+						</data>
+						<key>Title</key>
+						<string>README</string>
+					</dict>
+					<dict>
+						<key>ActionName</key>
+						<string>Set ARCHIVE_PATH to the folder containing your archive</string>
+						<key>MacroActionType</key>
+						<string>SetVariableToText</string>
+						<key>Text</key>
+						<string>~/projects/zkviz/data/notes</string>
+						<key>Variable</key>
+						<string>ZKVIZ_ARCHIVE_PATH</string>
+					</dict>
+					<dict>
+						<key>ActionName</key>
+						<string>Set path to the zkviz executable</string>
+						<key>MacroActionType</key>
+						<string>SetVariableToText</string>
+						<key>Text</key>
+						<string>~/envs/zkviz/bin/zkviz</string>
+						<key>Variable</key>
+						<string>ZKVIZ_PATH</string>
+					</dict>
+					<dict>
+						<key>ActionName</key>
+						<string>Notify that listing all notes might take a little while</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>Notification</string>
+						<key>SoundName</key>
+						<string></string>
+						<key>Subtitle</key>
+						<string>Listing notes selected in The Archive.</string>
+						<key>Text</key>
+						<string>This might take a few seconds.</string>
+						<key>Title</key>
+						<string>zkviz</string>
+					</dict>
+					<dict>
+						<key>ActionName</key>
+						<string>Get the name of all the files selected in The Archive</string>
+						<key>DisplayKind</key>
+						<string>Variable</string>
+						<key>IncludeStdErr</key>
+						<false/>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
+						<key>Text</key>
+						<string>use AppleScript version "2.4" -- Yosemite (10.10) or lateruse scripting additionstell application "System Events"	tell its application process "The Archive"		tell its window "The Archive"			tell its splitter group 1				tell its splitter group 1					tell its scroll area 2						tell its table 1							set theRows to rows							set theNames to {}														repeat with theRow in theRows								set theName to the name of item 1 of UI element of theRow								set theName to theName &amp; ".md"								copy theName to the end of theNames							end repeat														set AppleScript's text item delimiters to linefeed							set theFileNames to theNames as string							set AppleScript's text item delimiters to ""							return theFileNames													end tell					end tell				end tell			end tell		end tell	end tellend tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+						<key>Variable</key>
+						<string>ZKVIZ_ZETTEL_FILENAMES</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>ExpandTildeInPath</string>
+						<key>ActionName</key>
+						<string>Expand Tilde in ZKVIZ_ARCHIVE_PATH</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>Filter</string>
+						<key>Source</key>
+						<string>Variable</string>
+						<key>Variable</key>
+						<string>ZKVIZ_ARCHIVE_PATH</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>ExpandTildeInPath</string>
+						<key>ActionName</key>
+						<string>Expand Tilde in ZKVIZ_ARCHIVE_PATH</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>Filter</string>
+						<key>Source</key>
+						<string>Variable</string>
+						<key>Variable</key>
+						<string>ZKVIZ_PATH</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>IgnoreCaseRegEx</string>
+						<key>ActionName</key>
+						<string>Prepend the path to the archive to each filename</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>SearchReplace</string>
+						<key>Replace</key>
+						<string>%Variable%ZKVIZ_ARCHIVE_PATH%/</string>
+						<key>Search</key>
+						<string>(?m)^</string>
+						<key>Source</key>
+						<string>Variable</string>
+						<key>Variable</key>
+						<string>ZKVIZ_ZETTEL_FILENAMES</string>
+					</dict>
+					<dict>
+						<key>ActionName</key>
+						<string>Execute zkviz with the files selected.</string>
+						<key>DisplayKind</key>
+						<string>Window</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteShellScript</string>
+						<key>Path</key>
+						<string>/Users/chabot/projects/zkviz/env/bin/zkviz</string>
+						<key>Source</key>
+						<string>Nothing</string>
+						<key>StopOnFailure</key>
+						<false/>
+						<key>Text</key>
+						<string>#!/usr/bin/env python
+import os
+import subprocess
+
+# Get path to the zkviz executable
+zkviz = os.environ['KMVAR_ZKVIZ_PATH']
+
+# Get the list of paths using environment variables.
+filenames = os.environ['KMVAR_ZKVIZ_ZETTEL_FILENAMES'].strip().splitlines()
+
+# Create the output file next to your zettels. Otherwise, we run into a permission issue.
+archive_path = os.path.expanduser(os.environ['KMVAR_ZKVIZ_ARCHIVE_PATH'])
+output_filename = os.path.join(archive_path, 'zettel-network.html')
+
+# Build the arguments to 
+args = [zkviz, '--output', output_filename] + filenames
+
+# Capture error messages and display them if something happens. Otherwise,
+# this should print any output.
+try:
+    output = subprocess.check_output(args, stderr=subprocess.STDOUT)
+except subprocess.CalledProcessError as exc:
+    print("Status : FAIL", exc.returncode, exc.output)</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>582430104.35251606</real>
+				<key>ModificationDate</key>
+				<real>582518133.38314497</real>
+				<key>Name</key>
+				<string>Generate network visualization of notes selected in The Archive using zkviz</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>45</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4352</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>4C49BA73-EEC5-4AE2-A29B-178F17D9C3B4</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>App - The Archive</string>
+		<key>Targeting</key>
+		<dict>
+			<key>Targeting</key>
+			<string>Included</string>
+			<key>TargetingApps</key>
+			<array>
+				<dict>
+					<key>BundleIdentifier</key>
+					<string>de.zettelkasten.TheArchive</string>
+					<key>Name</key>
+					<string>The Archive</string>
+					<key>NewFile</key>
+					<string>/Applications/The Archive.app</string>
+				</dict>
+			</array>
+		</dict>
+		<key>ToggleMacroUID</key>
+		<string>CDBB7F8C-8114-42A6-B9EE-4B5A8169A575</string>
+		<key>UID</key>
+		<string>048F20DA-8E8A-4EDF-94E7-2F34B783DD5B</string>
+	</dict>
+</array>
+</plist>
