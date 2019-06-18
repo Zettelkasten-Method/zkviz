@@ -4,7 +4,7 @@
 
 I recommend using Python 3 and an environment specifically for zkviz.
 
-Assuming that you're on macOS or Linux, to create the environment, open
+Assuming that you're using macOS or Linux, to create the environment, open
 a Terminal window and type the following to create the standalone environment
 and activate it.
 
@@ -26,19 +26,17 @@ environment path to your `PATH` environment variable or specify the path to the
 zkviz executable directly. Below, I use the explicit path.
 
 Executing zkviz without any argument will build the visualization based on all
-the `*.md` files foudn in the current directory.
+the `*.md` files found in the current directory.
 
 
 ```sh
 ~/envs/zkviz/bin/zkviz
 ```
 
-You can also point zkviz to the folder containing your notes, for example, on
-Dropbox:
-
+You can also point zkviz to the folder containing your notes. For example:
 
 ```sh
-~/envs/zkviz/bin/zkviz --notes-dir ~/Dropbox/Notes
+~/envs/zkviz/bin/zkviz --notes-dir ~/Notes
 ```
 
 By default zkviz will look for files with the `.md` extension, but you can override
@@ -51,8 +49,16 @@ the default with the `--pattern` option:
 You can also pass a list of files to zkviz:
 
 ```sh
-~/envs/zkviz/bin/zkviz "~/Dropbox/Notes/201906021303 the state of affairs.md" "~/Dropbox/Notes/201901021232 Journey to the center of the earth.md"
+~/envs/zkviz/bin/zkviz "~/Notes/201906021303 the state of affairs.md" "~/Notes/201901021232 Journey to the center of the earth.md"
 ```
+
+## Using zkviz with Keyboard Maestro
+
+The `keyboard-maestro` folder includes a [Keyboard Maestro](https://www.keyboardmaestro.com)
+macro to automatically create a visualization based on the list of files
+currently selected in [The Archive](https://zettelkasten.de/the-archive/). To
+use this macro, download it and import it into Keyboard Maestro. The follow the
+README comment within the macro to set the necessary variables.
 
 ## Making a Release
 
