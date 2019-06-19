@@ -24,7 +24,7 @@ def log(msg, is_verbose=False):
     if not is_verbose:
         return
     print(msg)
-    
+
 def printProgressBar(iteration, total, prefix = "", decimals = 1, length = 100, fill = '█'):
     """
     Call in a loop to create terminal progress bar
@@ -115,7 +115,7 @@ def list_zettels(notes_dir, pattern='*.md', is_verbose=False):
 
     filepaths = glob.glob(os.path.join(notes_dir, pattern))
     return filepaths
-        
+
 def create_plotly_plot(graph, pos=None, is_verbose=False):
     """
     Creates a Plot.ly Figure that can be view online of offline.
@@ -168,8 +168,8 @@ def create_plotly_plot(graph, pos=None, is_verbose=False):
     count_nodes = len(graph.nodes())
     for index, node in enumerate(graph.nodes()):
         if is_verbose:
-            printProgressBar(index+1, count_nodes, length=50, prefix="    ")
-            
+            printProgressBar(index+1, count_nodes, length=48, prefix="    ")
+
         x, y = pos[node]
         text = '<br>'.join([node, graph.node[node].get('title', '')])
         node_trace['x'] += tuple([x])
@@ -178,16 +178,20 @@ def create_plotly_plot(graph, pos=None, is_verbose=False):
 
     # Color nodes based on the centrality
     log("  Coloring nodes ...", is_verbose)
-    for node, centrality in nx.degree_centrality(graph).items():
+    centrality_nodes = nx.degree_centrality(graph).items()
+    count_nodes = len(centrality_nodes)
+    for index, (node, centrality) in enumerate(centrality_nodes):
+        if is_verbose:
+            printProgressBar(index+1, count_nodes, length=48, prefix="    ")
         node_trace['marker']['color']+=tuple([centrality])
 
     # Draw the edges as annotations because it's only sane way to draw arrows.
     log("  Drawing edges ...", is_verbose)
     edges = []
     count_edges = len(graph.edges())
-    for index, from_node, to_node in enumerate(graph.edges()):
+    for index, (from_node, to_node) in enumerate(graph.edges()):
         if is_verbose:
-            printProgressBar(index+1, count_edges, length=50, prefix="    ")
+            printProgressBar(index+1, count_edges, length=48, prefix="    ")
         edges.append(
             dict(
                 # Tail coordinates
