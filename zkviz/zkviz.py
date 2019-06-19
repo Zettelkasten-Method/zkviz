@@ -10,6 +10,7 @@ links have the form [[YYYYMMDDHHMM]]
 import glob
 import os.path
 import re
+import argparse
 
 import networkx as nx
 import plotly
@@ -19,15 +20,45 @@ import plotly.graph_objs as go
 PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)\.md')
 PAT_LINK = re.compile(r'\[\[(\d+)\]\]')
 
+def log(msg, is_verbose=False):
+    if not is_verbose:
+        return
+    print(msg)
+    
+def printProgressBar(iteration, total, prefix = "", decimals = 1, length = 100, fill = '█'):
+    """
+    Call in a loop to create terminal progress bar
+    Adapted from <https://stackoverflow.com/a/34325723/1460929>
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+    """
+    suffix = "Complete"
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print('\r%s |%s| %s%% %s [%d/%d]' % (prefix, bar, percent, suffix, iteration, total), end = '\r')
+    # Print New Line on Complete
+    if iteration == total:
+        print()
 
-def parse_zettels(filepaths):
+def parse_zettels(filepaths, is_verbose=False):
     """ Parse the ID and title from the filename.
 
     Assumes that the filename has the format "YYYYMMDDHHMMSS This is title"
 
     """
     documents = []
-    for filepath in filepaths:
+    log("Parsing zettels ...", is_verbose)
+    count = len(filepaths)
+    for index, filepath in enumerate(filepaths):
+        if is_verbose:
+            printProgressBar(index+1, count, length=50, prefix="  ")
+
         filename = os.path.basename(filepath)
         r = PAT_ZK_ID.match(filename)
         if not r:
@@ -41,7 +72,7 @@ def parse_zettels(filepaths):
     return documents
 
 
-def create_graph(zettels):
+def create_graph(zettels, is_verbose=False):
     """
     Create of graph of the zettels linking to each other.
 
@@ -57,14 +88,19 @@ def create_graph(zettels):
 
     g = nx.Graph()
 
-    for doc in zettels:
+    log("Creating graph of zettels linking to each other ...", is_verbose)
+    count = len(zettels)
+    for index, doc in enumerate(zettels):
+        if is_verbose:
+            printProgressBar(index+1, count, length=50, prefix="  ")
+
         g.add_node(doc['id'], title=doc['title'])
         for link in doc['links']:
             g.add_edge(doc['id'], link)
     return g
 
 
-def list_zettels(notes_dir, pattern='*.md'):
+def list_zettels(notes_dir, pattern='*.md', is_verbose=False):
     """
     List zettels in a directory.
 
@@ -79,9 +115,8 @@ def list_zettels(notes_dir, pattern='*.md'):
 
     filepaths = glob.glob(os.path.join(notes_dir, pattern))
     return filepaths
-
-
-def create_plotly_plot(graph, pos=None):
+        
+def create_plotly_plot(graph, pos=None, is_verbose=False):
     """
     Creates a Plot.ly Figure that can be view online of offline.
 
@@ -98,6 +133,8 @@ def create_plotly_plot(graph, pos=None):
     fig : plotly Figure
 
     """
+
+    log("Creating plot ...", is_verbose)
 
     if pos is None:
         pos = nx.layout.kamada_kawai_layout(graph)
@@ -127,7 +164,12 @@ def create_plotly_plot(graph, pos=None):
             ),
             line=dict(width=2)))
 
-    for node in graph.nodes():
+    log("  Adding nodes ...", is_verbose)
+    count_nodes = len(graph.nodes())
+    for index, node in enumerate(graph.nodes()):
+        if is_verbose:
+            printProgressBar(index+1, count_nodes, length=50, prefix="    ")
+            
         x, y = pos[node]
         text = '<br>'.join([node, graph.node[node].get('title', '')])
         node_trace['x'] += tuple([x])
@@ -135,12 +177,17 @@ def create_plotly_plot(graph, pos=None):
         node_trace['text'] += tuple([text])
 
     # Color nodes based on the centrality
+    log("  Coloring nodes ...", is_verbose)
     for node, centrality in nx.degree_centrality(graph).items():
         node_trace['marker']['color']+=tuple([centrality])
 
     # Draw the edges as annotations because it's only sane way to draw arrows.
+    log("  Drawing edges ...", is_verbose)
     edges = []
-    for from_node, to_node in graph.edges():
+    count_edges = len(graph.edges())
+    for index, from_node, to_node in enumerate(graph.edges()):
+        if is_verbose:
+            printProgressBar(index+1, count_edges, length=50, prefix="    ")
         edges.append(
             dict(
                 # Tail coordinates
@@ -155,6 +202,7 @@ def create_plotly_plot(graph, pos=None):
                 )
             )
 
+    log("  Drawing figure ...", is_verbose)
     fig = go.Figure(
         data=[node_trace],
         layout=go.Layout(
@@ -175,6 +223,9 @@ def main(args=None):
     import sys
 
     parser = ArgumentParser(description=__doc__)
+    parser.add_argument('-v', '--verbose',
+                        help='prints progress to STDOUT',
+                        action="store_true")
     parser.add_argument('--notes-dir', default='.',
                         help='path to folder containin notes. [.]')
     parser.add_argument('--output', default='zettel-network.html',
@@ -189,16 +240,16 @@ def main(args=None):
     if args.zettel_paths:
         zettel_paths = args.zettel_paths
     else:
-        zettel_paths = list_zettels(args.notes_dir, pattern=args.pattern)
+        zettel_paths = list_zettels(args.notes_dir, pattern=args.pattern, is_verbose=args.verbose)
 
-    zettels = parse_zettels(zettel_paths)
+    zettels = parse_zettels(zettel_paths, is_verbose=args.verbose)
 
     # Fail in case we didn't find a zettel
     if not zettels:
         sys.exit("I'm sorry, I couldn't find any files.")
 
-    graph = create_graph(zettels)
-    fig = create_plotly_plot(graph)
+    graph = create_graph(zettels, is_verbose=args.verbose)
+    fig = create_plotly_plot(graph, is_verbose=args.verbose)
 
     plotly.offline.plot(fig, filename=args.output)
 
