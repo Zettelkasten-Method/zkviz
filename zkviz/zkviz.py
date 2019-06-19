@@ -16,7 +16,7 @@ import plotly
 import plotly.graph_objs as go
 
 
-PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)\.md')
+PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)\.[^\.]+$')
 PAT_LINK = re.compile(r'\[\[(\d+)\]\]')
 
 
