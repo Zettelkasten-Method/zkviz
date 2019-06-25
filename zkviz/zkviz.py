@@ -16,7 +16,7 @@ import plotly
 import plotly.graph_objs as go
 
 
-PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)\.md')
+PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)')
 PAT_LINK = re.compile(r'\[\[(\d+)\]\]')
 
 
@@ -28,7 +28,8 @@ def parse_zettels(filepaths):
     """
     documents = []
     for filepath in filepaths:
-        filename = os.path.basename(filepath)
+        basename = os.path.basename(filepath)
+        filename, ext = os.path.splitext(basename)
         r = PAT_ZK_ID.match(filename)
         if not r:
             continue
