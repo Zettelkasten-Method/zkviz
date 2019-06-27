@@ -183,7 +183,8 @@ def parse_args(args=None):
     parser.add_argument('--output', default='zettel-network.html',
                         help='name of output file. [zettel-network.html]')
     parser.add_argument('--pattern', action='append',
-            help='pattern to match notes. [*.md]')
+            help=('pattern to match notes. You can repeat this argument to'
+            ' match multiple file types. [*.md]'))
     parser.add_argument('zettel_paths', nargs='*', help='zettel file paths.')
     args = parser.parse_args(args=args)
 

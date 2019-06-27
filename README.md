@@ -46,6 +46,12 @@ the default with the `--pattern` option:
 ~/envs/zkviz/bin/zkviz --pattern '*.mkdown'
 ```
 
+You can also specify multiple patterns separately. With the following, zkviz
+will find all txt and md files. I recommend wrapping the pattern in quotes.
+
+```sh
+~/envs/zkviz/bin/zkviz --pattern '*.md' --pattern '*.txt'
+```
 You can also pass a list of files to zkviz:
 
 ```sh
