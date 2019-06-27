@@ -16,7 +16,7 @@ import plotly
 import plotly.graph_objs as go
 
 
-PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)\.md')
+PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)')
 PAT_LINK = re.compile(r'\[\[(\d+)\]\]')
 
 
@@ -28,7 +28,8 @@ def parse_zettels(filepaths):
     """
     documents = []
     for filepath in filepaths:
-        filename = os.path.basename(filepath)
+        basename = os.path.basename(filepath)
+        filename, ext = os.path.splitext(basename)
         r = PAT_ZK_ID.match(filename)
         if not r:
             continue
@@ -73,12 +74,16 @@ def list_zettels(notes_dir, pattern='*.md'):
     notes_dir : str
         Path to the directory containing the zettels.
     pattern : str (optional)
-        Pattern matching zettels. The default is '*.md'.
+        Pattern matching zettels. The default is '*.md'. If there are multiple
+        patterns, separate them with a |, such as in '*.md|*.txt'
 
     """
 
-    filepaths = glob.glob(os.path.join(notes_dir, pattern))
-    return filepaths
+    filepaths = []
+
+    for patt in pattern.split('|'):
+        filepaths.extend(glob.glob(os.path.join(notes_dir, patt)))
+    return sorted(filepaths)
 
 
 def create_plotly_plot(graph, pos=None):
@@ -170,28 +175,35 @@ def create_plotly_plot(graph, pos=None):
     return fig
 
 
-def main(args=None):
+def parse_args(args=None):
     from argparse import ArgumentParser
-    import sys
-
     parser = ArgumentParser(description=__doc__)
     parser.add_argument('--notes-dir', default='.',
                         help='path to folder containin notes. [.]')
     parser.add_argument('--output', default='zettel-network.html',
                         help='name of output file. [zettel-network.html]')
-    parser.add_argument('--pattern', default='*.md',
-                        help='pattern to match notes. [*.md]')
+    parser.add_argument('--pattern', action='append',
+            help=('pattern to match notes. You can repeat this argument to'
+            ' match multiple file types. [*.md]'))
     parser.add_argument('zettel_paths', nargs='*', help='zettel file paths.')
     args = parser.parse_args(args=args)
 
     # Use the list of files the user specify, otherwise, fall back to
     # listing a directory.
-    if args.zettel_paths:
-        zettel_paths = args.zettel_paths
-    else:
-        zettel_paths = list_zettels(args.notes_dir, pattern=args.pattern)
+    if not args.zettel_paths:
+        if args.pattern is None:
+            args.pattern = ['*.md']
+        patterns = '|'.join(args.pattern)
 
-    zettels = parse_zettels(zettel_paths)
+        args.zettel_paths = list_zettels(args.notes_dir, pattern=patterns)
+    return args
+
+
+def main(args=None):
+    import sys
+    args = parse_args(args)
+
+    zettels = parse_zettels(args.zettel_paths)
 
     # Fail in case we didn't find a zettel
     if not zettels:
