@@ -105,7 +105,13 @@ def create_plotly_plot(graph, pos=None):
     """
 
     if pos is None:
-        pos = nx.layout.kamada_kawai_layout(graph)
+        # The kamada kawai layout produces a really nice graph but it's
+        # a O(N^2) algorithm. It seems only reasonable to draw the graph
+        # with fewer than ~1000 nodes.
+        if len(graph) < 1000:
+            pos = nx.layout.kamada_kawai_layout(graph)
+        else:
+            pos = nx.layout.random_layout(graph)
 
     # Create scatter plot of the position of all notes
     node_trace = go.Scatter(
