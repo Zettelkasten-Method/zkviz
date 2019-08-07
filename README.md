@@ -1,5 +1,9 @@
 # zkviz: Visualize Link Network Between Zettels (Notes)
 
+Produce an interactive overview of all your notes and their connections.
+
+![](assets/screenshot.png)
+
 ## Installing
 
 I recommend using Python 3 and an environment specifically for zkviz.
