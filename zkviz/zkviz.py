@@ -10,10 +10,9 @@ links have the form [[YYYYMMDDHHMM]]
 import glob
 import os.path
 import re
+from textwrap import fill
 
-import networkx as nx
-import plotly
-import plotly.graph_objs as go
+
 
 
 PAT_ZK_ID = re.compile(r'^(?P<id>\d+)\s(.*)')
@@ -42,7 +41,7 @@ def parse_zettels(filepaths):
     return documents
 
 
-def create_graph(zettels):
+def create_graph(zettels, graph):
     """
     Create of graph of the zettels linking to each other.
 
@@ -56,13 +55,11 @@ def create_graph(zettels):
 
     """
 
-    g = nx.Graph()
-
     for doc in zettels:
-        g.add_node(doc['id'], title=doc['title'])
+        graph.add_node(doc['id'], title=doc['title'])
         for link in doc['links']:
-            g.add_edge(doc['id'], link)
-    return g
+            graph.add_edge(doc['id'], link)
+    return graph
 
 
 def list_zettels(notes_dir, pattern='*.md'):
@@ -86,111 +83,18 @@ def list_zettels(notes_dir, pattern='*.md'):
     return sorted(filepaths)
 
 
-def create_plotly_plot(graph, pos=None):
-    """
-    Creates a Plot.ly Figure that can be view online of offline.
-
-    Parameters
-    ----------
-    graph : nx.Graph
-        The network of zettels to visualize
-    pos : dict
-        Dictionay of zettel_id : (x, y) coordinates where to draw nodes. If
-        None, the Kamada Kawai layout will be used.
-
-    Returns
-    -------
-    fig : plotly Figure
-
-    """
-
-    if pos is None:
-        # The kamada kawai layout produces a really nice graph but it's
-        # a O(N^2) algorithm. It seems only reasonable to draw the graph
-        # with fewer than ~1000 nodes.
-        if len(graph) < 1000:
-            pos = nx.layout.kamada_kawai_layout(graph)
-        else:
-            pos = nx.layout.random_layout(graph)
-
-    # Create scatter plot of the position of all notes
-    node_trace = go.Scatter(
-        x=[],
-        y=[],
-        text=[],
-        mode='markers',
-        hoverinfo='text',
-        marker=dict(
-            showscale=True,
-            # colorscale options
-            #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
-            #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
-            #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
-            colorscale='YlGnBu',
-            reversescale=True,
-            color=[],
-            size=10,
-            colorbar=dict(
-                thickness=15,
-                title='Centrality',
-                xanchor='left',
-                titleside='right'
-            ),
-            line=dict(width=2)))
-
-    for node in graph.nodes():
-        x, y = pos[node]
-        text = '<br>'.join([node, graph.node[node].get('title', '')])
-        node_trace['x'] += tuple([x])
-        node_trace['y'] += tuple([y])
-        node_trace['text'] += tuple([text])
-
-    # Color nodes based on the centrality
-    for node, centrality in nx.degree_centrality(graph).items():
-        node_trace['marker']['color']+=tuple([centrality])
-
-    # Draw the edges as annotations because it's only sane way to draw arrows.
-    edges = []
-    for from_node, to_node in graph.edges():
-        edges.append(
-            dict(
-                # Tail coordinates
-                ax=pos[from_node][0], ay=pos[from_node][1], axref='x', ayref='y',
-                # Head coordinates
-                x=pos[to_node][0], y=pos[to_node][1], xref='x', yref='y',
-                # Aesthetics
-                arrowwidth=2, arrowcolor='#666', arrowhead=2,
-                # Have the head stop short 5 px for the center point,
-                # i.e., depends on the node marker size.
-                standoff=5,
-                )
-            )
-
-    fig = go.Figure(
-        data=[node_trace],
-        layout=go.Layout(
-            showlegend=False,
-            hovermode='closest',
-            margin=dict(b=20, l=5, r=5, t=40),
-            annotations=edges,
-            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        )
-    )
-
-    return fig
-
-
 def parse_args(args=None):
     from argparse import ArgumentParser
     parser = ArgumentParser(description=__doc__)
     parser.add_argument('--notes-dir', default='.',
                         help='path to folder containin notes. [.]')
-    parser.add_argument('--output', default='zettel-network.html',
-                        help='name of output file. [zettel-network.html]')
+    parser.add_argument('--output', default='zettel-network',
+                        help='name of output file. [zettel-network]')
     parser.add_argument('--pattern', action='append',
             help=('pattern to match notes. You can repeat this argument to'
             ' match multiple file types. [*.md]'))
+    parser.add_argument('--use-graphviz', action='store_true', default=False,
+            help='Use Graphviz instead of plotly to render the network.')
     parser.add_argument('zettel_paths', nargs='*', help='zettel file paths.')
     args = parser.parse_args(args=args)
 
@@ -206,21 +110,40 @@ def parse_args(args=None):
 
 
 def main(args=None):
-    import sys
     args = parse_args(args)
 
     zettels = parse_zettels(args.zettel_paths)
 
     # Fail in case we didn't find a zettel
     if not zettels:
-        sys.exit("I'm sorry, I couldn't find any files.")
+        raise FileNotFoundError("I'm sorry, I couldn't find any files.")
 
-    graph = create_graph(zettels)
-    fig = create_plotly_plot(graph)
+    if args.use_graphviz:
+        from zkviz.graphviz import NetworkGraphviz
+        import graphviz
+        try:
+            graphviz.version()
+        except graphviz.ExecutableNotFound:
+            raise FileNotFoundError(fill(
+                "The Graphviz application must be installed for the"
+                " --use-graphviz option to work. Please see"
+                " https://graphviz.org/download/ for installation"
+                " instructions."
+           ))
+        graph = NetworkGraphviz()
+    else:
+        from zkviz.plotly import NetworkPlotly
+        graph = NetworkPlotly()
 
-    plotly.offline.plot(fig, filename=args.output)
+    graph = create_graph(zettels, graph)
+    graph.render(args.output)
 
 
 if __name__ == "__main__":
     import sys
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except FileNotFoundError as e:
+        # Failed either because it didn't find any files or because Graphviz
+        # wasn't installed
+        sys.exit(e)
