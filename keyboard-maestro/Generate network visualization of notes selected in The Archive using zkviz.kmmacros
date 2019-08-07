@@ -221,12 +221,12 @@ import subprocess
 # Get path to the zkviz executable
 zkviz = os.environ['KMVAR_ZKVIZ_PATH']
 
-# Check if `/usr/local/bin` is in the PATH, which is need for Graphviz.
-# If not, append it
+# Check if `/usr/local/bin` is in the PATH, which is needed for Graphviz.
+# If not, append it.
 if '/usr/loca/bin/' not in os.environ['PATH']:
     os.environ['PATH'] += ':/usr/local/bin'
 
-# Get path to the zkviz executable
+# Use graphviz or not
 use_graphviz = int(os.environ['KMVAR_ZKVIZ_USE_GRAPHVIZ'])
 
 # Get the list of paths using environment variables.
@@ -236,7 +236,7 @@ filenames = os.environ['KMVAR_ZKVIZ_ZETTEL_FILENAMES'].strip().splitlines()
 archive_path = os.path.expanduser(os.environ['KMVAR_ZKVIZ_ARCHIVE_PATH'])
 output_filename = os.path.join(archive_path, 'zettel-network.html')
 
-# Build the arguments to 
+# Build the arguments to execute
 args = [zkviz, '--output', output_filename] + filenames
 if use_graphviz:
 	args.insert(1, '--use-graphviz')
@@ -260,7 +260,7 @@ except subprocess.CalledProcessError as exc:
 				<key>CreationDate</key>
 				<real>582430104.35251606</real>
 				<key>ModificationDate</key>
-				<real>586837534.73863602</real>
+				<real>586837783.08286202</real>
 				<key>Name</key>
 				<string>Generate network visualization of notes selected in The Archive using zkviz</string>
 				<key>Triggers</key>
