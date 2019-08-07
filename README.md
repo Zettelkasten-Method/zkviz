@@ -1,5 +1,8 @@
 # zkviz: Visualize Link Network Between Zettels (Notes)
 
+![Version](https://img.shields.io/github/tag/Zettelkasten-Method/zkviz.svg?style=flat)
+![License](https://img.shields.io/github/license/Zettelkasten-Method/zkviz.svg?style=flat)
+
 Produce an interactive overview of all your notes and their connections.
 
 ![](assets/screenshot.png)
