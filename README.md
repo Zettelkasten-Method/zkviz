@@ -19,6 +19,16 @@ Then install zkviz with:
 pip install zkviz
 ```
 
+If [Graphviz](https://graphviz.org/download/) is installed on your computer,
+zkviz can use it to draw the network. It is not a Python package so it needs to
+be installed independently. If you're on a Mac and have
+[Homebrew](https://brew.sh) installed, you can install Graphviz from a Terminal
+with:
+
+```sh
+brew install graphviz
+```
+
 ## Usage
 
 To execute zkviz from the Terminal, you either need to add the zkviz
@@ -56,6 +66,12 @@ You can also pass a list of files to zkviz:
 
 ```sh
 ~/envs/zkviz/bin/zkviz "~/Notes/201906021303 the state of affairs.md" "~/Notes/201901021232 Journey to the center of the earth.md"
+```
+
+To use Graphviz to generate the visualization, add the `--use-graphviz` option:
+
+```sh
+~/envs/zkviz/bin/zkviz --notes-dir ~/Notes --use-graphviz
 ```
 
 ## Using zkviz with Keyboard Maestro

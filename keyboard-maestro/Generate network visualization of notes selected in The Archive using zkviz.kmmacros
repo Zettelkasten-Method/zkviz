@@ -18,10 +18,10 @@
 						<key>StyledText</key>
 						<data>
 						cnRmZAAAAAADAAAAAgAAAAcAAABU
-						WFQucnRmAQAAAC6sAwAAKwAAAAEA
-						AACkAwAAe1xydGYxXGFuc2lcYW5z
+						WFQucnRmAQAAAC4kBAAAKwAAAAEA
+						AAAcBAAAe1xydGYxXGFuc2lcYW5z
 						aWNwZzEyNTJcY29jb2FydGYxNjcx
-						XGNvY29hc3VicnRmNTAwCntcZm9u
+						XGNvY29hc3VicnRmNjAwCntcZm9u
 						dHRibFxmMFxmbmlsXGZjaGFyc2V0
 						MCBIZWx2ZXRpY2FOZXVlO30Ke1xj
 						b2xvcnRibDtccmVkMjU1XGdyZWVu
@@ -43,29 +43,35 @@
 						bGVjdGUgaW4gVGhlIEFyY2hpdmUg
 						YXBwIFsyXS5cClwKRm9yIHRoaXMg
 						bWFjcm8gdG8gd29yayBwcm9wZXJs
-						eSwgcGxlYXNlIHNldCB0aGUgbmV4
-						dCB0d28gdmFyaWFibGVzOlwKXAot
-						IFpLVklaX0FSQ0hJVkVfUEFUSCBp
-						cyB0aGUgcGF0aCB0byB3aGVyZSB5
-						b3VyIGFyY2hpdmUgbm90ZXMgYXJl
-						IHN0b3JlLiBGb3IgZXhhbXBsZSwg
-						fi9Ecm9wYm94L05vdGVzXAotIFpL
-						VklaX1BBVEggaXMgdGhlIGFic29s
-						dXRlIHBhdGggdG8gdGhlIHprdml6
-						IGV4ZWN1dGFibGUuIFBsZWFzZSBz
-						ZWUgWzFdIGZvciBpbnN0cnVjdGlv
-						bnMgb2YgaG93IHRvIGluc3RhbGwg
-						aXQuIFRoZSBwYXRoIGJlbG93IHVz
-						ZXMgdGhlIG9uZSB5b3UnZCBoYXZl
-						IGlmIHlvdSBmb2xsb3dlZCB0aGUg
-						aW5zdHJ1Y3Rpb25zIGRpcmVjdGx5
-						LlwKXApbMV06IGh0dHBzOi8vZ2l0
-						aHViLmNvbS9aZXR0ZWxrYXN0ZW4t
-						TWV0aG9kL3prdml6XApbMl06IGh0
-						dHBzOi8vemV0dGVsa2FzdGVuLmRl
-						L3RoZS1hcmNoaXZlL30BAAAAIwAA
-						AAEAAAAHAAAAVFhULnJ0ZhAAAADe
-						TQhdtgEAAAAAAAAAAAAA
+						eSwgcGxlYXNlIHNldCB0aGVzZSB2
+						YXJpYWJsZXM6XApcCi0gWktWSVpf
+						QVJDSElWRV9QQVRIIGlzIHRoZSBw
+						YXRoIHRvIHdoZXJlIHlvdXIgYXJj
+						aGl2ZSBub3RlcyBhcmUgc3RvcmUu
+						IEZvciBleGFtcGxlLCB+L0Ryb3Bi
+						b3gvTm90ZXNcCi0gWktWSVpfUEFU
+						SCBpcyB0aGUgYWJzb2x1dGUgcGF0
+						aCB0byB0aGUgemt2aXogZXhlY3V0
+						YWJsZS4gUGxlYXNlIHNlZSBbMV0g
+						Zm9yIGluc3RydWN0aW9ucyBvZiBo
+						b3cgdG8gaW5zdGFsbCBpdC4gVGhl
+						IHBhdGggYmVsb3cgdXNlcyB0aGUg
+						b25lIHlvdSdkIGhhdmUgaWYgeW91
+						IGZvbGxvd2VkIHRoZSBpbnN0cnVj
+						dGlvbnMgZGlyZWN0bHkuXAotIFpL
+						VklaX1VTRV9HUkFQSFZJWiBzZXQg
+						dG8gMSBpZiB5b3Ugd2FudCB0byB1
+						c2UgR3JhcGh2aXogdG8gZ2VuZXJh
+						dGUgdGhlIHZpc3VhbGl6YXRpb24u
+						IE9yIHVzZSAwIGlmIHlvdSB3YW50
+						IHRvIHVzZSBQbG90bHlcClwKXApb
+						MV06IGh0dHBzOi8vZ2l0aHViLmNv
+						bS9aZXR0ZWxrYXN0ZW4tTWV0aG9k
+						L3prdml6XApbMl06IGh0dHBzOi8v
+						emV0dGVsa2FzdGVuLmRlL3RoZS1h
+						cmNoaXZlL30BAAAAIwAAAAEAAAAH
+						AAAAVFhULnJ0ZhAAAAA/NkpdtgEA
+						AAAAAAAAAAAA
 						</data>
 						<key>Title</key>
 						<string>README</string>
@@ -89,6 +95,16 @@
 						<string>~/envs/zkviz/bin/zkviz</string>
 						<key>Variable</key>
 						<string>ZKVIZ_PATH</string>
+					</dict>
+					<dict>
+						<key>ActionName</key>
+						<string>Choose whether to use Graphviz or not to render the visualization [0 or 1]</string>
+						<key>MacroActionType</key>
+						<string>SetVariableToText</string>
+						<key>Text</key>
+						<string>0</string>
+						<key>Variable</key>
+						<string>ZKVIZ_USE_GRAPHVIZ</string>
 					</dict>
 					<dict>
 						<key>ActionName</key>
@@ -189,8 +205,6 @@
 						<string>Window</string>
 						<key>IncludeStdErr</key>
 						<true/>
-						<key>IsDisclosed</key>
-						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteShellScript</string>
 						<key>Path</key>
@@ -207,6 +221,14 @@ import subprocess
 # Get path to the zkviz executable
 zkviz = os.environ['KMVAR_ZKVIZ_PATH']
 
+# Check if `/usr/local/bin` is in the PATH, which is needed for Graphviz.
+# If not, append it.
+if '/usr/loca/bin/' not in os.environ['PATH']:
+    os.environ['PATH'] += ':/usr/local/bin'
+
+# Use graphviz or not
+use_graphviz = int(os.environ['KMVAR_ZKVIZ_USE_GRAPHVIZ'])
+
 # Get the list of paths using environment variables.
 filenames = os.environ['KMVAR_ZKVIZ_ZETTEL_FILENAMES'].strip().splitlines()
 
@@ -214,8 +236,10 @@ filenames = os.environ['KMVAR_ZKVIZ_ZETTEL_FILENAMES'].strip().splitlines()
 archive_path = os.path.expanduser(os.environ['KMVAR_ZKVIZ_ARCHIVE_PATH'])
 output_filename = os.path.join(archive_path, 'zettel-network.html')
 
-# Build the arguments to 
+# Build the arguments to execute
 args = [zkviz, '--output', output_filename] + filenames
+if use_graphviz:
+	args.insert(1, '--use-graphviz')
 
 # Capture error messages and display them if something happens. Otherwise,
 # this should print any output.
@@ -236,7 +260,7 @@ except subprocess.CalledProcessError as exc:
 				<key>CreationDate</key>
 				<real>582430104.35251606</real>
 				<key>ModificationDate</key>
-				<real>582518133.38314497</real>
+				<real>586837783.08286202</real>
 				<key>Name</key>
 				<string>Generate network visualization of notes selected in The Archive using zkviz</string>
 				<key>Triggers</key>
