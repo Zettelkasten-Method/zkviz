@@ -41,13 +41,19 @@ def parse_zettels(filepaths):
     return documents
 
 
-def create_graph(zettels, graph):
+def create_graph(zettels, graph, include_self_references=True,
+                 only_listed=False):
     """
     Create of graph of the zettels linking to each other.
 
     Parameters
     ----------
     zettels : list of dictionaries
+    include_self_references : bool, optional
+        Include links to the source document. Defaults to True.
+    only_listed : bool, optional
+        Only include nodes in the graph it's actually one of the zettels.
+        Default is False.
 
     Returns
     -------
@@ -55,10 +61,29 @@ def create_graph(zettels, graph):
 
     """
 
-    for doc in zettels:
-        graph.add_node(doc['id'], title=doc['title'])
-        for link in doc['links']:
-            graph.add_edge(doc['id'], link)
+    # Collect IDs from source zettels and from zettels linked
+    zettel_ids = set()
+    link_ids = set()
+    for zettel in zettels:
+        zettel_ids.add(zettel['id'])
+        link_ids.update(zettel['links'])
+
+    if only_listed:
+        ids_to_include = zettel_ids
+    else:
+        ids_to_include = zettel_ids | link_ids
+
+    for zettel in zettels:
+        graph.add_node(zettel['id'], title=zettel['title'])
+        for link in zettel['links']:
+            if link not in ids_to_include:
+                continue
+            if include_self_references or (zettel['id'] != link):
+                # Truth table for the inclusion conditional
+                #               IS_SAME IS_DIFF   (Is different ID)
+                # INCLUDE          T       T
+                # DON'T INCLUDE    F       T
+                graph.add_edge(zettel['id'], link)
     return graph
 
 
@@ -91,10 +116,15 @@ def parse_args(args=None):
     parser.add_argument('--output', default='zettel-network',
                         help='name of output file. [zettel-network]')
     parser.add_argument('--pattern', action='append',
-            help=('pattern to match notes. You can repeat this argument to'
-            ' match multiple file types. [*.md]'))
+                        help=('pattern to match notes. You can repeat this argument to'
+                              ' match multiple file types. [*.md]'))
     parser.add_argument('--use-graphviz', action='store_true', default=False,
-            help='Use Graphviz instead of plotly to render the network.')
+                        help='Use Graphviz instead of plotly to render the network.')
+    parser.add_argument('--no-self-ref', action='store_false', default=True,
+                        dest='include_self_references',
+                        help='Do not include self-references in a zettel.')
+    parser.add_argument('--only-listed', action='store_true', default=False,
+            help='Only include links to documents that are in the file list')
     parser.add_argument('zettel_paths', nargs='*', help='zettel file paths.')
     args = parser.parse_args(args=args)
 
@@ -135,7 +165,12 @@ def main(args=None):
         from zkviz.plotly import NetworkPlotly
         graph = NetworkPlotly()
 
-    graph = create_graph(zettels, graph)
+    graph = create_graph(
+            zettels,
+            graph,
+            include_self_references=args.include_self_references,
+            only_listed=args.only_listed,
+        )
     graph.render(args.output)
 
 
