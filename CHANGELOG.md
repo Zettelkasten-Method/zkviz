@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0] - 2019-08-06
 
 ### New
+* Add options to not include external links, and self references (#16)
+* Add screenshot and tags to README (#15)
+
+### Changed
+* Use the Black formatter on the whole codebase
+
+## [1.2.0] - 2019-08-06
+
+### New
 
 * ENH: Add the `--use-graphviz` option to use Graphviz to draw the network (#13)
 
