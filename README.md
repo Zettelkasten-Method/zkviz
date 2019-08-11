@@ -81,6 +81,19 @@ To use Graphviz to generate the visualization, add the `--use-graphviz` option:
 ~/envs/zkviz/bin/zkviz --notes-dir ~/Notes --use-graphviz
 ```
 
+By default, zkviz will draw a node for every reference found in the files
+provided, even if the referenced zettel does not exist, and even if a zettel
+refers to itself. You can change that behavior in two ways. The `--only-list`
+option tells zkviz to draw links only to zettels that have been provided to it.
+In the example below, only links between the two zettels will be shown:
+
+```sh
+~/envs/zkviz/bin/zkviz --only-list "20190810190224 Note 1.md" "20190810190230 Note 2.md"
+```
+
+The other way to change the behavior is to disable self-reference links using
+the `--no-self-ref` option.
+
 ## Using zkviz with Keyboard Maestro
 
 The `keyboard-maestro` folder includes a [Keyboard Maestro](https://www.keyboardmaestro.com)
