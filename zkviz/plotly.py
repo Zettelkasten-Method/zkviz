@@ -3,8 +3,7 @@ import plotly.graph_objs as go
 
 
 class NetworkPlotly:
-
-    def __init__(self, name='Zettelkasten'):
+    def __init__(self, name="Zettelkasten"):
         """
         Build network to visualize with Plotly
 
@@ -75,36 +74,35 @@ class NetworkPlotly:
             x=[],
             y=[],
             text=[],
-            mode='markers',
-            hoverinfo='text',
+            mode="markers",
+            hoverinfo="text",
             marker=dict(
                 showscale=True,
                 # colorscale options
                 #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
                 #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
                 #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
-                colorscale='YlGnBu',
+                colorscale="YlGnBu",
                 reversescale=True,
                 color=[],
                 size=10,
                 colorbar=dict(
-                    thickness=15,
-                    title='Centrality',
-                    xanchor='left',
-                    titleside='right'
+                    thickness=15, title="Centrality", xanchor="left", titleside="right"
                 ),
-                line=dict(width=2)))
+                line=dict(width=2),
+            ),
+        )
 
         for node in self.graph.nodes():
             x, y = pos[node]
-            text = '<br>'.join([node, self.graph.node[node].get('title', '')])
-            node_trace['x'] += tuple([x])
-            node_trace['y'] += tuple([y])
-            node_trace['text'] += tuple([text])
+            text = "<br>".join([node, self.graph.node[node].get("title", "")])
+            node_trace["x"] += tuple([x])
+            node_trace["y"] += tuple([y])
+            node_trace["text"] += tuple([text])
 
         # Color nodes based on the centrality
         for node, centrality in nx.degree_centrality(self.graph).items():
-            node_trace['marker']['color']+=tuple([centrality])
+            node_trace["marker"]["color"] += tuple([centrality])
 
         # Draw the edges as annotations because it's only sane way to draw arrows.
         edges = []
@@ -112,27 +110,35 @@ class NetworkPlotly:
             edges.append(
                 dict(
                     # Tail coordinates
-                    ax=pos[from_node][0], ay=pos[from_node][1], axref='x', ayref='y',
+                    ax=pos[from_node][0],
+                    ay=pos[from_node][1],
+                    axref="x",
+                    ayref="y",
                     # Head coordinates
-                    x=pos[to_node][0], y=pos[to_node][1], xref='x', yref='y',
+                    x=pos[to_node][0],
+                    y=pos[to_node][1],
+                    xref="x",
+                    yref="y",
                     # Aesthetics
-                    arrowwidth=2, arrowcolor='#666', arrowhead=2,
+                    arrowwidth=2,
+                    arrowcolor="#666",
+                    arrowhead=2,
                     # Have the head stop short 5 px for the center point,
                     # i.e., depends on the node marker size.
                     standoff=5,
-                    )
                 )
+            )
 
         fig = go.Figure(
             data=[node_trace],
             layout=go.Layout(
                 showlegend=False,
-                hovermode='closest',
+                hovermode="closest",
                 margin=dict(b=20, l=5, r=5, t=40),
                 annotations=edges,
                 xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            )
+            ),
         )
         return fig
 
@@ -150,6 +156,6 @@ class NetworkPlotly:
 
         """
         fig = self.build_plotly_figure()
-        if not output.endswith('.html'):
-            output += '.html'
+        if not output.endswith(".html"):
+            output += ".html"
         fig.write_html(output, auto_open=view)

@@ -4,8 +4,7 @@ from graphviz import Digraph
 
 
 class NetworkGraphviz:
-
-    def __init__(self, name='Zettelkasten', engine='sfdp', shape='record'):
+    def __init__(self, name="Zettelkasten", engine="sfdp", shape="record"):
         """
         Build network to visualize with Graphviz.
 
@@ -50,11 +49,11 @@ class NetworkGraphviz:
             The text label for each node, typically the zettel title.
 
         """
-        if self.shape == 'plaintext':
+        if self.shape == "plaintext":
             label = self.wrap_title("{} {}".format(node_id, title)).strip()
-        elif self.shape == 'record':
+        elif self.shape == "record":
             # Wrap in {} so the elements are stacked vertically
-            label = "{" + '|'.join([node_id, self.wrap_title(title)]) + "}"
+            label = "{" + "|".join([node_id, self.wrap_title(title)]) + "}"
 
         self.graph.node(node_id, label, shape=self.shape)
 
