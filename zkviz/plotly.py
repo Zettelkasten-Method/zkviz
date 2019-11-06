@@ -95,7 +95,7 @@ class NetworkPlotly:
 
         for node in self.graph.nodes():
             x, y = pos[node]
-            text = "<br>".join([node, self.graph.node[node].get("title", "")])
+            text = "<br>".join([node, self.graph.nodes[node].get("title", "")])
             node_trace["x"] += tuple([x])
             node_trace["y"] += tuple([y])
             node_trace["text"] += tuple([text])
